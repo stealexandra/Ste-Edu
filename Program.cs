@@ -54,6 +54,24 @@ namespace POOL{
         }
         
         public static void CadFuncionario(){
+        Console.WriteLine("Seu funcionário é um gerente ou vendedor?");
+        Console.WriteLine("Digite 1 para vendedor \n Digite 2 para Gerente");
+        int opcao;
+        opcao = int.Parse(Console.ReadLine());
+        switch(opcao){
+            case 1:
+            Vendedor vend = new Vendedor();
+                vend.dadosVen();
+                Console.WriteLine("Cadastro concluído! \n Pressione qualquer botão para continuar...");
+                Console.ReadKey();
+                break;
+                case 2:
+                Gerente Ger = new Gerente();
+                Ger.dadosGer();
+                Console.WriteLine("Cadastro concluído! \n Pressione qualquer botão para continuar...");
+                Console.ReadKey();
+                break;
+
 
         }
         public static void CadCliente(){
@@ -70,6 +88,7 @@ namespace POOL{
             Console.WriteLine("Iniciando o cadastro do produto...");
             Produto prod = new Produto();
             prod.dadosprod();
+            
             Console.WriteLine("Cadastrando novo produto...");
             Console.WriteLine("---------------------------");
             
