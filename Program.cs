@@ -11,6 +11,7 @@ namespace POOL{
         static bool loop = true;
 
         static void Main(string[] args){
+
             Console.Clear();
             Console.WriteLine("Olá, seja bem-vindo ao sistema de vendas Edu&Ste");
             Console.WriteLine("Pressione qualquer tecla para continuar...");
@@ -18,45 +19,48 @@ namespace POOL{
             MenuPrincipal();   
         }
         public static void MenuPrincipal(){
-            Console.Clear();
-            Console.WriteLine("Bem-vindo ao menu principal! ");
-            Console.WriteLine("----------------------------");
-            Console.WriteLine("");
-            Console.WriteLine("* Para realizar o cadastro de um funcionário, digite 1; ");
-            Console.WriteLine("* Para realizar o cadastro de um cliente, digite 2; ");
-            Console.WriteLine("* Para realizar o cadastro de um produto, digite 3; ");
-            Console.WriteLine("* Para a criação de uma venda, digite 4; ");
-            Console.WriteLine("* Para gerenciar e ver detalhes sobre o aumento de um funcionário, digite 5;");
-            Console.WriteLine("* Ou, digite 6 para sair. ");
+            
             int opcao;
-            opcao = int.Parse(Console.ReadLine());
-            switch (opcao)
-            {
-                case 1:
-                    CadFuncionario();
-                break;
+            do{
+                
+                Console.WriteLine("Bem-vindo ao menu principal! ");
+                Console.WriteLine("----------------------------");
+                Console.WriteLine("");
+                Console.WriteLine("* Para realizar o cadastro de um funcionário, digite 1; ");
+                Console.WriteLine("* Para realizar o cadastro de um cliente, digite 2; ");
+                Console.WriteLine("* Para realizar o cadastro de um produto, digite 3; ");
+                Console.WriteLine("* Para a criação de uma venda, digite 4; ");
+                Console.WriteLine("* Para gerenciar e ver detalhes sobre o aumento de um funcionário, digite 5;");
+                Console.WriteLine("* Ou, digite 6 para sair. ");
+                opcao = int.Parse(Console.ReadLine());
+                switch (opcao)
+                {
+                    case 1:
+                        CadFuncionario();
+                    break;
 
-                case 2:
-                    CadCliente();
-                break;
+                    case 2:
+                        CadCliente();
+                    break;
 
-                case 3:
-                    CadProduto();
-                break;
+                    case 3:
+                        CadProduto();
+                    break;
 
-                case 4:
-                    CadVenda();
-                break;
+                    case 4:
+                        CadVenda();
+                    break;
 
-                case 5:
-                    GeFunc();
-                break;
-                case 6:
-                    fim();
-                break;
-                default:
-                break;
-            }
+                    case 5:
+                        GeFunc();
+                    break;
+                    case 6:
+                        fim();
+                    break;
+                    default:
+                    break;
+                }
+            }while(opcao != 6);
         }
         
         public static void CadFuncionario(){
@@ -79,7 +83,6 @@ namespace POOL{
                 Console.WriteLine("Cadastro concluído! \n Pressione qualquer botão para continuar...");
                 Console.ReadKey();
                 break;
-
 
         }
         }
@@ -112,6 +115,11 @@ namespace POOL{
             string clienteproc;
             string codigoproc;
             string vendeproc;
+            bool verclient = false;
+            bool verproduto = false;
+            bool vervendedor = false;
+            string nomeproduto = "";
+
             Console.Clear();
             Console.WriteLine("Digite o nome do cliente");
             clienteproc = Console.ReadLine();
@@ -119,6 +127,7 @@ namespace POOL{
                 if(Cliente.GetNome() == clienteproc){
                     cliente novocliente = Cliente;
                     venda.SetClient(novocliente);
+                    verclient = true;
                 }
             }
             Console.WriteLine("Digite o código do produto");
@@ -127,17 +136,31 @@ namespace POOL{
                 if(produto.GetCodigo() == codigoproc){
                     Produto novoproduto = produto;
                     venda.SetProdu(novoproduto);
+                    verproduto = true;
+                    nomeproduto = novoproduto.GetCodigo();
                 }
+            }
             Console.WriteLine("Digite o nome do vendedor");
+            vendeproc = Console.ReadLine();
             foreach (Vendedor vendedor in listaVendedor){
                 if(vendedor.GetNome() == vendeproc){
                     Vendedor novovendedor = vendedor;
                     venda.SetVende(novovendedor);
+                    vervendedor = true;
                 }
             }
+            if(verclient == true && verproduto == true && vervendedor == true){
+                listaVendas.Add(venda);
+                Console.WriteLine("A venda do produto de número " + nomeproduto + " foi um sucesso!");
+            } else {
+                Console.WriteLine("Erro!!!");
+                Console.WriteLine("Digite qualquer tecla para voltar...");
+                Console.ReadKey();
             }
-        }
-        public static void GeFunc(){
+            
+
+            }
+        static void GeFunc(){
             int a = 0;
             int escolha;
             foreach (Vendedor vend in listaVendedor){
@@ -149,7 +172,8 @@ namespace POOL{
                 Console.WriteLine("1 - Aumentar salário \n 2 - Reduzir salário \n 3 - Demitir");
                 escolha = int.Parse(Console.ReadLine());
                 MenuPrincipal();
-        }
+            }
         public static void fim(){}
+        
     }
 }
