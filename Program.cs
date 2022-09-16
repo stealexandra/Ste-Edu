@@ -2,6 +2,14 @@ using System;
 using System.Collections.Generic;
 namespace POOL{
     class Program{
+
+        static List<cliente> listaClientes = new List<cliente>();
+        static List<Vendedor> listaVendedor = new List<Vendedor>();
+        static List<Produto> listaProdutos = new List<Produto>();
+        static List<Gerente> listaGerente = new List<Gerente>();
+        static List<Venda> listaVendas = new List<Venda>();
+        static bool loop = true;
+
         static void Main(string[] args){
             Console.Clear();
             Console.WriteLine("Olá, seja bem-vindo ao sistema de vendas Edu&Ste");
@@ -44,11 +52,9 @@ namespace POOL{
                     GeFunc();
                 break;
                 case 6:
-                fim();
+                    fim();
                 break;
-
                 default:
-
                 break;
             }
         }
@@ -64,21 +70,25 @@ namespace POOL{
                 vend.dadosVen();
                 Console.WriteLine("Cadastro concluído! \n Pressione qualquer botão para continuar...");
                 Console.ReadKey();
+                listaVendedor.Add(vend);
                 break;
                 case 2:
                 Gerente Ger = new Gerente();
                 Ger.dadosGer();
+                listaGerente.Add(Ger);
                 Console.WriteLine("Cadastro concluído! \n Pressione qualquer botão para continuar...");
                 Console.ReadKey();
                 break;
 
 
         }
+        }
         public static void CadCliente(){
             Console.WriteLine("Iniciando seu cadastro como cliente... por favor, preencha os dados solicitados.");
             Console.WriteLine("--------------------------------------------------------------------------------");
-            Cliente Felipe = new Cliente();
-                Felipe.dados();
+            cliente clie = new cliente();
+                clie.dados();
+                listaClientes.Add(clie);
                 Console.WriteLine("Cliente cadastrado com sucesso! ");
                 Console.WriteLine("Pressione qualquer tecla para continuar.");
                 Console.ReadKey();
@@ -88,10 +98,9 @@ namespace POOL{
             Console.WriteLine("Iniciando o cadastro do produto...");
             Produto prod = new Produto();
             prod.dadosprod();
-            
+            listaProdutos.Add(prod);
             Console.WriteLine("Cadastrando novo produto...");
-            Console.WriteLine("---------------------------");
-            
+            Console.WriteLine("------------------------------");
             Console.Clear();
             Console.WriteLine("Produto cadastrado com sucesso!");
             Console.WriteLine("Pressione qualquer tecla para continuar...");
@@ -99,8 +108,48 @@ namespace POOL{
             MenuPrincipal();
         }
         public static void CadVenda(){
+            Venda venda = new Venda();
+            string clienteproc;
+            string codigoproc;
+            string vendeproc;
+            Console.Clear();
+            Console.WriteLine("Digite o nome do cliente");
+            clienteproc = Console.ReadLine();
+            foreach(cliente Cliente in listaClientes){
+                if(Cliente.GetNome() == clienteproc){
+                    cliente novocliente = Cliente;
+                    venda.SetClient(novocliente);
+                }
+            }
+            Console.WriteLine("Digite o código do produto");
+            codigoproc = Console.ReadLine();
+            foreach (Produto produto in listaProdutos){
+                if(produto.GetCodigo() == codigoproc){
+                    Produto novoproduto = produto;
+                    venda.SetProdu(novoproduto);
+                }
+            Console.WriteLine("Digite o nome do vendedor");
+            foreach (Vendedor vendedor in listaVendedor){
+                if(vendedor.GetNome() == vendeproc){
+                    Vendedor novovendedor = vendedor;
+                    venda.SetVende(novovendedor);
+                }
+            }
+            }
         }
-        public static void GeFunc(){}
+        public static void GeFunc(){
+            int a = 0;
+            int escolha;
+            foreach (Vendedor vend in listaVendedor){
+                Console.WriteLine(a + ": " + vend.GetNome());
+                a++;}
+                Console.WriteLine("Qual funcionário você quer? (Número)");
+                listaVendedor.ElementAt(int.Parse(Console.ReadLine()));
+                Console.WriteLine("O que você deseja fazer?");
+                Console.WriteLine("1 - Aumentar salário \n 2 - Reduzir salário \n 3 - Demitir");
+                escolha = int.Parse(Console.ReadLine());
+                MenuPrincipal();
+        }
         public static void fim(){}
     }
 }
