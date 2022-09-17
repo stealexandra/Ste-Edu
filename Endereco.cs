@@ -1,4 +1,4 @@
-namespace POOL{
+namespace POO{
     public class Endereco{
         //rua, número, bairro, cep, cidade e estado
         public string rua;
@@ -43,14 +43,14 @@ namespace POOL{
         public void SetEstado(string estado){
             this.estado = estado;
         }
-        public void dados(){
+        public void dadosEnd(){
             Console.WriteLine("Digite seu endereço");
             Console.WriteLine("Rua: ");
             rua = Console.ReadLine();
             Console.WriteLine("Número: ");
-            numero = (Console.ReadLine());
+            numero = Console.ReadLine();
             Console.WriteLine("Bairro: ");
-            bairro = ( Console.ReadLine());
+            bairro = Console.ReadLine();
             Console.WriteLine("Cep: ");
             cep = Console.ReadLine();
             Console.WriteLine("Cidade: ");
