@@ -1,6 +1,7 @@
-namespace POOL{
-    public class produto{
-        public string marca, descricao, codigo, valor;
+namespace POO{
+    public class Produto{
+        public string marca, descricao, codigo; 
+        public double valor;
 
         public string GetMarca(){
             return marca;
@@ -20,11 +21,21 @@ namespace POOL{
         public void SetCodigo(string codigo){
             this.codigo = codigo;
         }
-        public string GetValor(){
+        public double GetValor(){
             return valor;
         }
-        public void SetValor(string valor){
+        public void SetValor(double valor){
             this.valor = valor;
+        }
+        public void dadosprod(){
+            Console.WriteLine("Qual a marca do produto? ");
+            marca = Console.ReadLine();
+            Console.WriteLine("Descreva o produto: ");
+            descricao = (Console.ReadLine());
+            Console.WriteLine("Qual o código? ");
+            codigo = ( Console.ReadLine());
+            Console.WriteLine("Qual o preço do produto em reais?");
+            valor = int.Parse(Console.ReadLine());
         }
     }
 }
