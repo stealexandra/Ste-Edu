@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-namespace POOL{
+namespace POO{
     class Program{
 
         static List<cliente> listaClientes = new List<cliente>();
@@ -11,18 +11,20 @@ namespace POOL{
         static bool loop = true;
 
         static void Main(string[] args){
-
+            //Início
             Console.Clear();
-            Console.WriteLine("Olá, seja bem-vindo ao sistema de vendas Edu&Ste");
-            Console.WriteLine("Pressione qualquer tecla para continuar...");
+            Console.WriteLine(" ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ");
+            Console.WriteLine("|    Olá, seja bem-vindo ao sistema de vendas Edu&Ste  |");
+            Console.WriteLine("|    Pressione qualquer tecla para continuar...        |");
+            Console.WriteLine(" ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ");
             Console.ReadKey();
             MenuPrincipal();   
         }
         public static void MenuPrincipal(){
-            
+            //Menu Principal
             int opcao;
             do{
-                
+                Console.Clear();
                 Console.WriteLine("Bem-vindo ao menu principal! ");
                 Console.WriteLine("----------------------------");
                 Console.WriteLine("");
@@ -33,6 +35,7 @@ namespace POOL{
                 Console.WriteLine("* Para gerenciar e ver detalhes sobre o aumento de um funcionário, digite 5;");
                 Console.WriteLine("* Ou, digite 6 para sair. ");
                 opcao = int.Parse(Console.ReadLine());
+                //Escolha de ação
                 switch (opcao)
                 {
                     case 1:
@@ -56,6 +59,7 @@ namespace POOL{
                     break;
                     case 6:
                         fim();
+                        Console.WriteLine("Sistema finalizado!");
                     break;
                     default:
                     break;
@@ -64,27 +68,29 @@ namespace POOL{
         }
         
         public static void CadFuncionario(){
-        Console.WriteLine("Seu funcionário é um gerente ou vendedor?");
-        Console.WriteLine("Digite 1 para vendedor \n Digite 2 para Gerente");
-        int opcao;
-        opcao = int.Parse(Console.ReadLine());
-        switch(opcao){
-            case 1:
-            Vendedor vend = new Vendedor();
-                vend.dadosVen();
-                Console.WriteLine("Cadastro concluído! \n Pressione qualquer botão para continuar...");
-                Console.ReadKey();
-                listaVendedor.Add(vend);
-                break;
-                case 2:
-                Gerente Ger = new Gerente();
-                Ger.dadosGer();
-                listaGerente.Add(Ger);
-                Console.WriteLine("Cadastro concluído! \n Pressione qualquer botão para continuar...");
-                Console.ReadKey();
-                break;
 
-        }
+            //Cadastro de Funcionário
+            Console.WriteLine("Seu funcionário é um gerente ou vendedor?");
+            Console.WriteLine("Digite 1 para vendedor \nDigite 2 para gerente");
+            int opcao;
+            opcao = int.Parse(Console.ReadLine());
+            switch(opcao){
+                case 1:
+                Vendedor vend = new Vendedor();
+                    vend.dadosVen();
+                    listaVendedor.Add(vend);
+                    Console.WriteLine("Cadastro concluído! \n ~ Pressione qualquer botão para continuar...");
+                    Console.ReadKey();
+                    break;
+                    case 2:
+                    Gerente Ger = new Gerente();
+                    Ger.dadosGer();
+                    listaGerente.Add(Ger);
+                    Console.WriteLine("Cadastro concluído! \n ~ Pressione qualquer botão para continuar...");
+                    Console.ReadKey();
+                    break;
+
+            }
         }
         public static void CadCliente(){
             Console.WriteLine("Iniciando seu cadastro como cliente... por favor, preencha os dados solicitados.");
@@ -119,6 +125,7 @@ namespace POOL{
             bool verproduto = false;
             bool vervendedor = false;
             string nomeproduto = "";
+            double novovalor = 0;
 
             Console.Clear();
             Console.WriteLine("Digite o nome do cliente");
@@ -138,6 +145,8 @@ namespace POOL{
                     venda.SetProdu(novoproduto);
                     verproduto = true;
                     nomeproduto = novoproduto.GetCodigo();
+                    novovalor = produto.GetValor();
+
                 }
             }
             Console.WriteLine("Digite o nome do vendedor");
@@ -149,9 +158,14 @@ namespace POOL{
                     vervendedor = true;
                 }
             }
+            Console.WriteLine("Quantas unidades você quer comprar?");
+            venda.SetUnidade(int.Parse(Console.ReadLine()));
+
             if(verclient == true && verproduto == true && vervendedor == true){
                 listaVendas.Add(venda);
-                Console.WriteLine("A venda do produto de número " + nomeproduto + " foi um sucesso!");
+                Console.WriteLine("A venda do produto de código " + nomeproduto + " e preço de R$" + (novovalor * venda.GetUnidade()) + " foi um sucesso!");
+                Console.WriteLine("Pressione qualquer tecla para continuar...");
+                Console.ReadKey();
             } else {
                 Console.WriteLine("Erro!!!");
                 Console.WriteLine("Digite qualquer tecla para voltar...");
@@ -163,17 +177,103 @@ namespace POOL{
         static void GeFunc(){
             int a = 0;
             int escolha;
-            foreach (Vendedor vend in listaVendedor){
-                Console.WriteLine(a + ": " + vend.GetNome());
-                a++;}
-                Console.WriteLine("Qual funcionário você quer? (Número)");
-                listaVendedor.ElementAt(int.Parse(Console.ReadLine()));
+            int escolha2;
+
+            //Aumentar ou reduzir salário
                 Console.WriteLine("O que você deseja fazer?");
-                Console.WriteLine("1 - Aumentar salário \n 2 - Reduzir salário \n 3 - Demitir");
+                Console.WriteLine("1 - Aumentar salário \n2 - Reduzir salário");
                 escolha = int.Parse(Console.ReadLine());
-                MenuPrincipal();
-            }
-        public static void fim(){}
-        
+
+                //Aumentar salário
+                if(escolha == 1){
+
+                    //Vendedor ou Gerente
+                    Console.WriteLine("O funcionário é um vendedor ou gerente?");
+                    Console.WriteLine("1 - Vendedor \n2- Gerente");
+                    escolha2 = int.Parse(Console.ReadLine());
+
+                    //Se Vendedor
+                    if(escolha2 == 1){
+                        foreach (Vendedor vendedor in listaVendedor){
+                        Console.WriteLine(vendedor.GetNome() + " - " + vendedor.GetCpf() + "\n");
+                        }
+                    Console.WriteLine("Qual o funcionário que você deseja aumentar o salário?");
+                    string nomeprocurado = Console.ReadLine();
+
+                    foreach (Vendedor vendedor in listaVendedor){
+                        if(vendedor.GetNome() == nomeprocurado){
+                        vendedor.SetSalario(vendedor.aumentosalvend(vendedor));
+                        Console.WriteLine("Salário atualizado com sucesso! \n Novo salário: " + vendedor.GetSalario());
+                        Console.WriteLine("Pressione qualquer tecla para continuar...");
+                        Console.ReadKey();
+                        }
+                    }
+
+                    //Se Gerente
+                    } else if(escolha2 == 2){
+                        foreach (Gerente gerente in listaGerente){
+                            Console.WriteLine(gerente.GetNome() + " - " + gerente.GetCpf() + "\n");
+                        }
+                        Console.WriteLine("Qual o gerente que você deseja aumentar o salário?");
+                        string nomeprocurado = Console.ReadLine();
+
+                        foreach (Gerente gerente in listaGerente){
+                            if(gerente.GetNome() == nomeprocurado);
+                            gerente.SetSalario(gerente.aumentosalGer(gerente));
+                            Console.WriteLine("Salário atualizado com sucesso! \n Novo salário: " + gerente.GetSalario());
+                            Console.WriteLine("Pressione qualquer tecla para continuar...");
+                            Console.ReadKey();
+                            }
+                        }
+
+                    //Se diminuir salário
+                    } else if(escolha == 2){
+                        //Vendedor ou gerente?
+                        Console.WriteLine("O funcionário é um vendedor ou gerente?");
+                        Console.WriteLine("1 - Vendedor \n2- Gerente");
+                        escolha2 = int.Parse(Console.ReadLine());
+
+                        //Vendedor
+                        if(escolha2 == 1){
+                            foreach (Vendedor vendedor in listaVendedor){
+                                Console.WriteLine(vendedor.GetNome() + " - " + vendedor.GetCpf() + "\n");
+                                }
+
+                            Console.WriteLine("Qual o funcionário que você deseja diminuir o salário?");
+                            string nomeprocurado = Console.ReadLine();
+
+                            foreach (Vendedor vendedor in listaVendedor){
+                                if(vendedor.GetNome() == nomeprocurado){
+                                    vendedor.SetSalario(vendedor.diminuisalvend(vendedor));
+                                    Console.WriteLine("Salário atualizado com sucesso! \n Novo salário: " + vendedor.GetSalario());
+                                    Console.WriteLine("Pressione qualquer tecla para continuar...");
+                                    Console.ReadKey();
+                                }
+                            }
+                        //Gerente
+                        } else if(escolha2 == 2){
+                            foreach (Gerente gerente in listaGerente){
+                                Console.WriteLine(gerente.GetNome() + " - " + gerente.GetCpf() + "\n");
+                                }
+
+                            Console.WriteLine("Qual o gerente que você deseja diminuir o salário?");
+                            string nomeprocurado = Console.ReadLine();
+
+                            foreach (Gerente gerente in listaGerente){
+                                if(gerente.GetNome() == nomeprocurado){
+                                    gerente.SetSalario(gerente.diminuisalger(gerente));
+                                    Console.WriteLine("Salário atualizado com sucesso! \n Novo salário: " + gerente.GetSalario());
+                                    Console.WriteLine("Pressione qualquer tecla para continuar...");
+                                    Console.ReadKey();
+                                }
+                            }
+                                
+                        }
+                        }
+                    
+        //Fim do GeFunc
+        }
+            
+        public static void fim(){}    
     }
 }
