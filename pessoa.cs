@@ -1,10 +1,16 @@
-namespace POOL{
-    public class pessoa{
-        private string nome;
-        private Endereco endereco;
-        private string nascimento;
-        private string cpf;
-        private string rg;
+namespace POO{
+    public abstract class pessoa{
+        protected string nome;
+        protected Endereco endereco;
+        protected string nascimento;
+        protected string cpf;
+        protected string rg;
+        public pessoa(){
+            this.endereco = new Endereco();
+        }
+        public pessoa(string nome, Endereco endereco, string nascimento, string cpf, string rg){
+            this.endereco = new Endereco();
+        }
         public string GetNome(){
             return nome;
         }
@@ -44,8 +50,10 @@ namespace POOL{
             rg = ( Console.ReadLine());
             Console.WriteLine("informe sua data de nascimento");
             nascimento = Console.ReadLine();
-            Endereco FelipeEnd = new Endereco();
-            FelipeEnd.dados();
+            //Endereco teste = new Endereco();
+            //teste.dadosEnd();
+            //endereco = teste;
+            endereco.dadosEnd();
         }
     }
 }
