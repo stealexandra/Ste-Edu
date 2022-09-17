@@ -1,8 +1,10 @@
-namespace POOL{
+namespace POO{
     public class Gerente:Func{
-        
-        public override void aumento(){
-            
+
+        public void dadosGer(){
+            dados();
+            Console.WriteLine("Qual o salário do Gerente?");
+            salario = int.Parse(Console.ReadLine());
         }
     }
 }
